@@ -2,7 +2,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.window.ComposeUIViewController
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
-import navigation.RootComponent
+import presentation.navigation.RootComponent
 
 fun MainViewController() = ComposeUIViewController {
     val root = remember {

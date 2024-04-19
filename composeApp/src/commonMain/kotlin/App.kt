@@ -3,10 +3,10 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.slide
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
-import navigation.RootComponent
+import presentation.navigation.RootComponent
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import screens.HomeScreen
-import screens.ScreenB
+import presentation.screens.HomeScreen
+import presentation.screens.ScreenB
 
 @Composable
 @Preview

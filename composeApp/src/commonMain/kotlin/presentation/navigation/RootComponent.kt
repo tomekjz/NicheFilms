@@ -1,4 +1,4 @@
-package navigation
+package presentation.navigation
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.ExperimentalDecomposeApi

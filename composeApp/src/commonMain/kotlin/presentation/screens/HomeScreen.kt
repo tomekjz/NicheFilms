@@ -1,4 +1,4 @@
-package screens
+package presentation.screens
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -37,8 +37,8 @@ import com.cilo.app.presentation.components.theme.Grey20
 import com.cilo.app.presentation.components.theme.Orange80
 import com.cilo.app.presentation.components.theme.fontDarkGray
 import com.cilo.app.presentation.components.theme.lightGreyReferralCodeBorder
-import navigation.BuildingCalculationComponent
-import navigation.BuildingCalculationEvent
+import presentation.navigation.BuildingCalculationComponent
+import presentation.navigation.BuildingCalculationEvent
 
 @Composable
 fun HomeScreen(component: BuildingCalculationComponent) {

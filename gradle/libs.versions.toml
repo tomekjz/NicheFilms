@@ -19,6 +19,8 @@ navigationRuntimeKtx = "2.7.7"
 extensionsComposeJetbrains = "2.1.4-compose-experimental"
 decompose = "2.2.2"
 kotlinxSerializationJson = "1.6.1"
+ktor = "2.3.10"
+koin = "3.5.6"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -38,6 +40,11 @@ androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navig
 decompose = {group = "com.arkivanov.decompose", name = "decompose", version.ref = "decompose"}
 decompose-jetbrains = { module = "com.arkivanov.decompose:extensions-compose-jetbrains", version.ref = "extensionsComposeJetbrains" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-json = { module = "io.ktor:ktor-client-json", version.ref = "ktor" }
+ktor-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
