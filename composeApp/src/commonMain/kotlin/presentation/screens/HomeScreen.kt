@@ -7,10 +7,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.Button
@@ -21,6 +25,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -37,68 +42,147 @@ import com.cilo.app.presentation.components.theme.Grey20
 import com.cilo.app.presentation.components.theme.Orange80
 import com.cilo.app.presentation.components.theme.fontDarkGray
 import com.cilo.app.presentation.components.theme.lightGreyReferralCodeBorder
-import presentation.navigation.BuildingCalculationComponent
-import presentation.navigation.BuildingCalculationEvent
+import presentation.navigation.HomeScreenComponent
+import presentation.navigation.HomeScreenEvent
 
 @Composable
-fun HomeScreen(component: BuildingCalculationComponent) {
-    val area = remember { mutableStateOf(TextFieldValue("")) }
-    val height = remember { mutableStateOf(TextFieldValue("")) }
-    val occupants = remember { mutableStateOf(TextFieldValue("")) }
-    val doors = remember { mutableStateOf(TextFieldValue("")) }
-    val windows = remember { mutableStateOf(TextFieldValue("")) }
-    val BTUs = remember { mutableStateOf(0) }
-    val showTotal = remember { mutableStateOf(false) }
+fun HomeScreen(component: HomeScreenComponent) {
     val genreList = listOf("Horror", "Action", "Comedy")
     val selectedGenre = remember { mutableStateOf(TextFieldValue("")) }
     val genreExpanded = remember { mutableStateOf(false) }
-    val selectedGenreIndex = remember { mutableIntStateOf(0) }
-    Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-        Column(Modifier.padding(vertical = 16.dp, horizontal = 32.dp)) {
-            Box(Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
-                TextStartAlignedDropDownBox(text = selectedGenre.value.text, label = "Select genre") {
+
+    val budgetList = listOf("Under $5 million (Indie)", "$5-50 million (Middle-ground)", "$50+ million (Blockbuster)")
+    val selectedBudget = remember { mutableStateOf(TextFieldValue("")) }
+    val budgetExpanded = remember { mutableStateOf(false) }
+
+    val countryList = listOf("UK", "US", "Japan")
+    val selectedCountry = remember { mutableStateOf(TextFieldValue("")) }
+    val countryExpanded = remember { mutableStateOf(false) }
+
+    val decadeList = listOf("2020s", "2010s", "2000s")
+    val selectedDecade = remember { mutableStateOf(TextFieldValue("")) }
+    val decadeExpanded = remember { mutableStateOf(false) }
+
+    Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+        val scrollState = rememberScrollState()
+        Spacer(Modifier.height(16.dp))
+        Text("Let's find you a movie to watch")
+        Column(Modifier.padding(horizontal = 48.dp, vertical = 16.dp).verticalScroll(scrollState), horizontalAlignment = Alignment.CenterHorizontally) {
+            //Genres
+            Box(Modifier.padding(vertical = 16.dp)) {
+                TextStartAlignedDropDownBox(text = selectedGenre.value.text, label = "Select a genre") {
                     genreExpanded.value = !genreExpanded.value
                 }
                 DropdownMenu(
                     expanded = genreExpanded.value,
                     onDismissRequest = { genreExpanded.value = false }
                 ) {
-                    genreList.forEachIndexed { index, duration ->
+                    genreList.forEach { genre ->
                         DropdownMenuItem(
-                            text = { Text(text = duration) },
+                            text = { Text(text = genre) },
                             onClick = {
-                                selectedGenreIndex.intValue = index
                                 genreExpanded.value = false
-                                selectedGenre.value = TextFieldValue(duration)
+                                selectedGenre.value = TextFieldValue(genre)
                             }
                         )
                     }
                 }
             }
-        }
-        Button(
-            onClick = {
-                showTotal.value = true
-                BTUs.value =
-                    (area.value.text.toInt() * height.value.text.toInt()) + (occupants.value.text.toInt() * 100) + (doors.value.text.toInt() * 1000) + (windows.value.text.toInt() * 1000)
-            },
-            Modifier.fillMaxWidth().padding(horizontal = 32.dp, vertical = 8.dp),
-            shape = RoundedCornerShape(8.dp)
-        ) {
-            Text("Calculate")
-        }
-        AnimatedVisibility(showTotal.value) {
-            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "${BTUs.value} BTUs")
-                val tons = (BTUs.value / 12000F)
-                Text(text = "$tons tons")
+
+            //Budgets
+            AnimatedVisibility(selectedGenre.value.text.isNotEmpty()) {
+                Box(Modifier.padding(vertical = 16.dp)) {
+                    TextStartAlignedDropDownBox(
+                        text = selectedBudget.value.text,
+                        label = "Select a budget"
+                    ) {
+                        budgetExpanded.value = !budgetExpanded.value
+                    }
+                    DropdownMenu(
+                        expanded = budgetExpanded.value,
+                        onDismissRequest = { budgetExpanded.value = false }
+                    ) {
+                        budgetList.forEach { budget ->
+                            DropdownMenuItem(
+                                text = { Text(text = budget) },
+                                onClick = {
+                                    budgetExpanded.value = false
+                                    selectedBudget.value = TextFieldValue(budget)
+                                }
+                            )
+                        }
+                    }
+                }
             }
+
+            //Countries
+            AnimatedVisibility(selectedBudget.value.text.isNotEmpty()) {
+                Box(Modifier.padding(vertical = 16.dp)) {
+                    TextStartAlignedDropDownBox(
+                        text = selectedCountry.value.text,
+                        label = "Select a country"
+                    ) {
+                        countryExpanded.value = !countryExpanded.value
+                    }
+                    DropdownMenu(
+                        expanded = countryExpanded.value,
+                        onDismissRequest = { countryExpanded.value = false }
+                    ) {
+                        countryList.forEach { country ->
+                            DropdownMenuItem(
+                                text = { Text(text = country) },
+                                onClick = {
+                                    countryExpanded.value = false
+                                    selectedCountry.value = TextFieldValue(country)
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+
+            //Decades
+            AnimatedVisibility(selectedCountry.value.text.isNotEmpty()) {
+                Box(Modifier.padding(vertical = 16.dp)) {
+                    TextStartAlignedDropDownBox(
+                        text = selectedDecade.value.text,
+                        label = "Select a decade"
+                    ) {
+                        decadeExpanded.value = !decadeExpanded.value
+                    }
+                    DropdownMenu(
+                        expanded = decadeExpanded.value,
+                        onDismissRequest = { decadeExpanded.value = false }
+                    ) {
+                        decadeList.forEach { decade ->
+                            DropdownMenuItem(
+                                text = { Text(text = decade) },
+                                onClick = {
+                                    decadeExpanded.value = false
+                                    selectedDecade.value = TextFieldValue(decade)
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+            if (selectedCountry.value.text.isNotEmpty()) {
+                LaunchedEffect(Unit) {
+                    scrollState.scrollTo(scrollState.maxValue)
+                }
+            }
+        }
+        AnimatedVisibility(selectedGenre.value.text.isNotEmpty()
+                && selectedBudget.value.text.isNotEmpty()
+                && selectedCountry.value.text.isNotEmpty()
+                && selectedDecade.value.text.isNotEmpty()
+        ) {
             Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Bottom) {
                 Button(
-                    onClick = { component.onEvent(BuildingCalculationEvent.ClickNext) },
+                    onClick = { component.onEvent(HomeScreenEvent.ClickNext) },
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp, vertical = 16.dp)
                 ) {
-                    Text("Next")
+                    Text("Spin the wheel")
                 }
             }
         }

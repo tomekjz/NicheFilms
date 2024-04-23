@@ -6,7 +6,7 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import presentation.navigation.RootComponent
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import presentation.screens.HomeScreen
-import presentation.screens.ScreenB
+import presentation.screens.MovieCarouselScreen
 
 @Composable
 @Preview
@@ -19,7 +19,7 @@ fun App(root: RootComponent) {
         ){ child ->
             when(val instance = child.instance) {
                 is RootComponent.Child.BuildingCalculation -> HomeScreen(instance.component)
-                is RootComponent.Child.ScreenB -> ScreenB(instance.component)
+                is RootComponent.Child.ScreenB -> MovieCarouselScreen(instance.component)
             }
 
         }

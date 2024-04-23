@@ -33,7 +33,6 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.decompose)
-            implementation(libs.ktor.core)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -47,9 +46,10 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.ktor.core)
             implementation(libs.ktor.json)
-            implementation(libs.ktor.serialization)
-            implementation(libs.koin.android)
-            implementation(libs.koin.compose)
+            implementation(libs.koin.core)
+//            implementation(libs.koin.android)
+//            implementation(libs.koin.compose)
+
         }
     }
 }

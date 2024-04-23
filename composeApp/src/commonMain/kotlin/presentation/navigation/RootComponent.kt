@@ -27,23 +27,23 @@ class RootComponent(
     ): Child {
         return when (config) {
             Configuration.BuildingCalucation -> Child.BuildingCalculation(
-                BuildingCalculationComponent(
+                HomeScreenComponent(
                     componentContext = context,
-                    onNavigateToScreenB = { _ ->
+                    onNavigateToMovieCarouselScreen = { _ ->
                         navigation.pushNew(Configuration.ScreenB)
                     }
                 )
             )
 
             Configuration.ScreenB -> Child.ScreenB(
-                ScreenBComponenet(componentContext = context)
+                MovieCarouselComponenet(componentContext = context)
             )
         }
     }
 
     sealed class Child {
-        data class BuildingCalculation(val component: BuildingCalculationComponent) : Child()
-        data class ScreenB(val component: ScreenBComponenet) : Child()
+        data class BuildingCalculation(val component: HomeScreenComponent) : Child()
+        data class ScreenB(val component: MovieCarouselComponenet) : Child()
     }
 
     @Serializable

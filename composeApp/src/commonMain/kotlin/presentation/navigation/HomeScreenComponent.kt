@@ -4,14 +4,14 @@ import com.arkivanov.decompose.ComponentContext
 
 // These Components can be treated as traditional ViewModels
 
-class BuildingCalculationComponent(
+class HomeScreenComponent(
     componentContext: ComponentContext,
-    private val onNavigateToScreenB: (String) -> Unit
+    private val onNavigateToMovieCarouselScreen: (String) -> Unit
 ) : ComponentContext by componentContext {
 
-    fun onEvent(event: BuildingCalculationEvent) {
+    fun onEvent(event: HomeScreenEvent) {
         when(event){
-            BuildingCalculationEvent.ClickNext -> onNavigateToScreenB("")
+            HomeScreenEvent.ClickNext -> onNavigateToMovieCarouselScreen("")
         }
     }
 }

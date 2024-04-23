@@ -4,7 +4,7 @@ import com.arkivanov.decompose.ComponentContext
 
 // These Components can be treated as traditional ViewModels
 
-class ScreenBComponenet(
+class MovieCarouselComponenet(
     componentContext: ComponentContext
 ) : ComponentContext by componentContext {
 }
